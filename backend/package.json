@@ -47,7 +47,7 @@
   "devDependencies": {
     "@types/cheerio": "0.22.5",
     "@types/cors": "2.8.3",
-    "@types/node": "8.0.53",
+    "@types/node": "8.5.2",
     "@types/normalizr": "2.0.18",
     "@types/request": "2.0.8",
     "@types/uuid": "3.4.3",
