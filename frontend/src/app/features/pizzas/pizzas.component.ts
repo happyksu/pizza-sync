@@ -13,6 +13,7 @@ import {
 } from 'app/shared/states/pizzas/pizzas.interface';
 import * as PizzasActions from 'app/shared/states/pizzas/pizzas.actions';
 import * as OrdersActions from 'app/shared/states/orders/orders.actions';
+import { getPizzaSearch } from '../../shared/states/ui/ui.selector';
 
 @Component({
   selector: 'app-pizzas',
@@ -22,18 +23,16 @@ import * as OrdersActions from 'app/shared/states/orders/orders.actions';
 export class PizzasComponent implements OnInit {
   @Input() locked: boolean;
 
-  public pizzasCategories$: Observable<IPizzaCategoryWithPizzas[]>;
-  public pizzasCategories: IPizzaCategoryWithPizzas[];
-  public search$: Observable<string>;
+  public pizzasCategories$: Observable<
+    IPizzaCategoryWithPizzas[]
+  > = this.store$.select(getCategoriesAndPizzas);
+
+  public search$: Observable<string> = this.store$.select(getPizzaSearch);
 
   constructor(private store$: Store<IStore>, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.store$.dispatch(new PizzasActions.LoadPizzas());
-
-    this.search$ = this.store$.select(state => state.ui.pizzaSearch);
-
-    this.pizzasCategories$ = this.store$.pipe(getCategoriesAndPizzas);
   }
 
   addOrder(pizza: IPizzaCommon, priceIndex: number) {

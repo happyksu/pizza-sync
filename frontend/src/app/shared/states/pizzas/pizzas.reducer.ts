@@ -1,11 +1,21 @@
 import { ActionReducer, Action } from '@ngrx/store';
-
 import * as PizzasActions from 'app/shared/states/pizzas//pizzas.actions';
-import { pizzasState } from 'app/shared/states/pizzas/pizzas.initial-state';
-import { IPizzasTable } from 'app/shared/states/pizzas/pizzas.interface';
+import {
+  IPizzasTable,
+  IPizzaCommon,
+} from 'app/shared/states/pizzas/pizzas.interface';
+import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+
+export const pizzasAdapter: EntityAdapter<IPizzaCommon> = createEntityAdapter<
+  IPizzaCommon
+>();
+
+export function pizzasInitState(): IPizzasTable {
+  return pizzasAdapter.getInitialState();
+}
 
 export function pizzasReducer(
-  ordersTbl = pizzasState(),
+  ordersTbl = pizzasInitState(),
   action: PizzasActions.All
 ): IPizzasTable {
   switch (action.type) {
